@@ -21,7 +21,7 @@
 </head>
 <body>
 <header class="sticky-top">
-    <a href="index.php">
+    <a href="index.html">
     <div class="hat">
         <h1><i class="fa fa-mobile" aria-hidden="true"></i><span class="title-color">VERSED</span></h1>
     </div>

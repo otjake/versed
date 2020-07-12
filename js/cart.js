@@ -31,7 +31,7 @@ function removal(){
                         $(".empty_cart_info").html("<div class='alert-info alert-info text-center text-capitalize text-danger'>Your cart is empty,youu are being redirected to our products page</div>");
 //redirecting to index page
                         setTimeout(function() {
-                            window.location='index.php'
+                            window.location='index.html'
                         }, 2000);
                     }
                 }
@@ -71,7 +71,7 @@ $(".remove_btn").click(function (e) {
                         $(".empty_cart_info").html("<div class='alert-info alert-info text-center text-capitalize text-danger'>Your cart is empty,youu are being redirected to our products page</div>");
 //redirecting to index page
                         setTimeout(function() {
-                            window.location='index.php'
+                            window.location='index.html'
                         }, 2000);
                     }
                 }
