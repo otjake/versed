@@ -53,16 +53,14 @@ class Router
 
     public function __construct($route, $paystackObj)
     {
-        $routes = $this->getAllRoutes($paystackObj);
-
-        if (!in_array($route, $routes)) {
+        if (!in_array($route, Router::$ROUTES)) {
             throw new ValidationException(
                 "Route '{$route}' does not exist."
             );
         }
 
         $this->route = strtolower($route);
-        $this->route_class = $this->getRouteClass($paystackObj);
+        $this->route_class = 'Yabacon\\Paystack\\Routes\\' . ucwords($route);
 
         $mets = get_class_methods($this->route_class);
         if (empty($mets)) {
@@ -86,20 +84,6 @@ class Router
                 return $caller->callEndpoint($interface, $params, $sentargs);
             };
             $this->methods[$mtd] = \Closure::bind($mtdFunc, $this, get_class());
-        }
-    }
-
-    private function getAllRoutes($paystackObj)
-    {
-        return array_merge(static::$ROUTES, array_keys($paystackObj->custom_routes));
-    }
-
-    private function getRouteClass($paystackObj)
-    {
-        try {
-            return $paystackObj->custom_routes[$this->route];
-        } catch (\Exception $execption) {
-            return 'Yabacon\\Paystack\\Routes\\' . ucwords($this->route);
         }
     }
 }

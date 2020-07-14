@@ -66,7 +66,7 @@ function products()
             $name = $row["name"];
             $price = $row["price"];
 
-            echo "<div class='col-xs-12   col-md-4  ml-2 text-center item'>
+            echo "<div class='col-xs-12  col-md-4 text-center item'>
             <form method='post'  id='productForm'>
                 <div class='image'><img src=$img  /></div>
                 <div class='name'>$name</div>

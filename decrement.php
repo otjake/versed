@@ -14,7 +14,7 @@ if(isset($_SESSION['shopping_cart'] )&& !empty($_SESSION['shopping_cart'])) {
 //                    and if thats the last item inn the cart uunsett all cart seessions and redirect home
                     if (empty($_SESSION["shopping_cart"])) {
                         unset($_SESSION["shopping_cart"]);
-                        header("Location:index.html");
+                        header("Location:index.php");
                     }
                 } else {
                     $_SESSION['shopping_cart'][$key]["quantity"] = $quantity - 12;

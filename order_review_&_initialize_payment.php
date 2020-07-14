@@ -10,12 +10,12 @@ if(isset($_SESSION['shopping_cart'])){
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+<!--    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">-->
     <link href="fontawesome/fontawesome.min.css" type="text/css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="slider/flexslider.css" type="text/css">
     <!-- Bootstrap CSS -->
-    <!--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">-->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">    <script src="https://kit.fontawesome.com/760c3d66bf.js" crossorigin="anonymous"></script>
 
@@ -23,7 +23,7 @@ if(isset($_SESSION['shopping_cart'])){
 </head>
 <body>
 <header class="sticky-top">
-    <a href="index.html">
+    <a href="index.php">
         <div class="hat">
             <h1><i class="fa fa-mobile" aria-hidden="true"></i><span class="title-color">VERSED</span></h1>
         </div>
@@ -120,7 +120,7 @@ if(isset($_SESSION['shopping_cart'])){
                             <tr>
                                 <td colspan="5" align="right">
 
-                                    <strong>TOTAL:</strong> <strong class="total_cart_amount"><?php echo $final_amount;?></strong>
+                                    <strong>TOTAL:</strong> <strong class="total_cart_amount" name="final"><?php echo number_format($final_amount);?></strong>
                                 </td>
                             </tr>
                             </tbody>
@@ -139,8 +139,20 @@ if(isset($_SESSION['shopping_cart'])){
             <div class="col-12 customer" id="customer">
                 <div class="form-submit">
 <?php //  include("pay.php"); ?>
+                    <div id="response"></div>
+                                    <!--This uses the yabacon inntialize
+                                     The initialize method is very similar to the top part of the pay.js file all it does is initialize
+                                     transactions-->
 
-                    <form >
+<!--                    <form method="post" action="initialize.php">-->
+<!--                        <script src="https://js.paystack.co/v1/inline.js"></script>-->
+<!--                        <button type="submit" id="paystack" name="pay" > Pay </button>-->
+<!--                    </form>-->
+
+
+                    <!--This uses the yabacon verify(verify.php) only transactions and the pay.js file-->
+
+                    <form method="post">
                         <script src="https://js.paystack.co/v1/inline.js"></script>
                         <button type="button" id="paystack" name="pay" onclick="payWithPaystack()"> Pay </button>
                     </form>
@@ -165,7 +177,7 @@ if(isset($_SESSION['shopping_cart'])){
             var handler = PaystackPop.setup({
                 key: 'pk_test_110212113ff36c5efae0a6a3ac9b6ad06af64b06',
                 email: '<?php echo  $customer_email ?>',
-                amount: <?php echo  $final_amount ?>00,
+                amount: <?php echo ($final_amount)?>00,
                 metadata: {
                     custom_fields: [
                         {
@@ -176,11 +188,57 @@ if(isset($_SESSION['shopping_cart'])){
                     ]
                 },
                 callback: function(response){
-                    alert('success. transaction ref is ' + response.reference);
+                    // using ajax to send a get request from verify_payment.php
+                    //which utilizes the yabacon class to verify transactions
+                    $.ajax({
+                        url: 'verify_payment.php?reference='+ response.reference,
+                        method: 'get'
+                    }).done(function (response) {
+                        let pay_details = JSON.parse(response);
+
+                        if(pay_details.reference) {
+                            $("#response").removeClass('alert alert-danger').addClass('alert alert-success');
+                            $("#response").html("transaction reference is " + pay_details.reference + "<br>" +
+                                "transaction amount is " + pay_details.amount + "<br>" +
+                                "Client email is " + pay_details.c_email);
+                            alert("transaction success take note of your reference NO: " + pay_details.reference);
+                            //post request to insert into database file
+                            $.ajax({
+                                url: 'save_tranx.php',
+                                method: 'post',
+                                data: {
+                                    "reference": pay_details.reference,
+                                    "amount": pay_details.amount,
+                                    "email": pay_details.c_email
+                                },
+                                success:function (data) {
+let data_saving=JSON.parse(data);
+if(data_saving.success){
+setTimeout(function () {
+    window.location.replace("index.php?reference="+pay_details.reference);
+
+},5000)
+}
+if(data_saving.error){
+    $("#response").removeClass('alert alert-danger').addClass('alert alert-success');
+    $("#response").html("We were unable to document this transaction.<br>" +
+        "Kindly take note of your reference number <strong><i class='text-dark'>"+ pay_details.reference +"</i></strong> <br> and call tolu on 0909"
+
+    );
+}
+                                }
+
+                            });
+                        }
+                        else {
+                            $("#response").removeClass('alert alert-success').addClass('alert alert-danger');
+                            $("#response").html(pay_details.error);
+                        }
+                    });
                 },
                 onClose: function () {
                     //when the user close the payment modal
-                    alert('Transaction cancelled');
+                    alert('Transaction cancelled,click pay to try again');
                 }
             });
             handler.openIframe(); //open the paystack's payment modal

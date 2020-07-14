@@ -8,12 +8,12 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+<!--    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">-->
     <link href="fontawesome/fontawesome.min.css" type="text/css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="slider/flexslider.css" type="text/css">
     <!-- Bootstrap CSS -->
-<!--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">    <script src="https://kit.fontawesome.com/760c3d66bf.js" crossorigin="anonymous"></script>
 
@@ -21,7 +21,7 @@
 </head>
 <body>
 <header class="sticky-top">
-    <a href="index.html">
+    <a href="index.php">
     <div class="hat">
         <h1><i class="fa fa-mobile" aria-hidden="true"></i><span class="title-color">VERSED</span></h1>
     </div>
@@ -89,7 +89,7 @@
                             <form  method="post" class="reform" >
                                 <input type='hidden' name='action'   class='action' value="remove" />
                                 <input type='hidden' name='code' class='code' value="<?php echo $code; ?>" />
-                                <button  class="remove_btn">Remove Item</button>
+                                <button  class="remove_btn"><i class="fa fa-trash" aria-hidden="true"></i></button>
                             </form>
                         </div>
                         </td>
@@ -101,7 +101,7 @@
                                         <input type='hidden' name='action'  class='action' value="change1" />
                                         <input type="submit" value="-" class="minus" name="decrement" style=" width: 10%;">
                                     </form>
-                                                               <input name="quantity" class="quantity" type="text" value="<?php echo $quantity ?>" >
+                                                               <input name="quantity" class="quantity" type="text" disabled value="<?php echo $quantity ?>" >
 
                                     <form >
                                         <input type='hidden' class="code" name='code' value='<?php echo $code;?>' />
@@ -122,7 +122,7 @@
                     ?>
 
                     <tr>
-                        <td colspan="5" align="right">
+                        <td colspan="5" align="right" class="total_holder">
 
                            <strong>TOTAL:</strong> <strong class="total_cart_amount"><?php echo $total_price;?></strong>
                             <p><button class="btn-outline-primary  confirm"><a href="#customer">Confirm order</a></button></p>
@@ -157,7 +157,7 @@
                         <label for="exampleInputEmail1">Email address</label>
                         <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Enter email">
                         <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-                        <input type="text" name="customer_code" value="<?php echo rand(15,35) ?>">
+                        <input type="hidden" name="customer_code" value="<?php echo rand() ?>">
 
                     </div>
                     <button type="submit" class="btn btn-primary customer_btn">Submit</button>

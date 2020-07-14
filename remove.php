@@ -13,7 +13,7 @@ if(isset($_SESSION['shopping_cart'] )&& !empty($_SESSION['shopping_cart'])) {
             //once last item in cart is remove or $_SESSION["shopping_cart"] is empty redirect to home page
             if (empty($_SESSION["shopping_cart"])) {
                 unset($_SESSION["shopping_cart"]);
-                header("Location:index.html");
+                header("Location:index.php");
             }
         }
     }

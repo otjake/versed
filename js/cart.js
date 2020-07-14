@@ -31,7 +31,7 @@ function removal(){
                         $(".empty_cart_info").html("<div class='alert-info alert-info text-center text-capitalize text-danger'>Your cart is empty,youu are being redirected to our products page</div>");
 //redirecting to index page
                         setTimeout(function() {
-                            window.location='index.html'
+                            window.location='index.php'
                         }, 2000);
                     }
                 }
@@ -71,7 +71,7 @@ $(".remove_btn").click(function (e) {
                         $(".empty_cart_info").html("<div class='alert-info alert-info text-center text-capitalize text-danger'>Your cart is empty,youu are being redirected to our products page</div>");
 //redirecting to index page
                         setTimeout(function() {
-                            window.location='index.html'
+                            window.location='index.php'
                         }, 2000);
                     }
                 }
@@ -187,7 +187,7 @@ if(dataResult.error){
     $(msg).removeClass("alert alert-danger").addClass("alert alert-success");
     $(msg).text("Hope these are correct ,Name: " + dataResult.name + "  email: " + dataResult.email );
     setTimeout(function () {
-        window.location='order_review.php?name='+dataResult.name +' email='+ dataResult.email;
+        window.location='order_review_&_initialize_payment.php?name='+dataResult.name +' email='+ dataResult.email;
     }, 3000);
 }
 

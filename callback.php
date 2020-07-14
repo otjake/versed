@@ -1,12 +1,14 @@
 <?php
+include("dbconnection.php") ;
 
-$curl = curl_init();
+echo $curl = curl_init();
 $reference = isset($_GET['reference']) ? $_GET['reference'] : '';
 if(!$reference){
     die('No reference supplied');
 }
 
 curl_setopt_array($curl, array(
+   CURLOPT_SSL_VERIFYPEER => false,
     CURLOPT_URL => "https://api.paystack.co/transaction/verify/" . rawurlencode($reference),
     CURLOPT_RETURNTRANSFER => true,
     CURLOPT_HTTPHEADER => [
@@ -24,7 +26,8 @@ if($err){
     die('Curl returned error: ' . $err);
 }
 
-$tranx = json_decode($response);
+ $tranx = json_decode($response);
+var_dump($tranx);
 
 if(!$tranx->status){
     // there was an error from the API
@@ -36,5 +39,5 @@ if('success' == $tranx->data->status){
     // please check other things like whether you already gave value for this ref
     // if the email matches the customer who owns the product etc
     // Give value
-    echo "<h2>Thank you for making a purchase. Your file has bee sent your email.</h2>";
+    echo "<h2>Thank you for making a purchase. Your file has bee sent your email.i think i have it</h2>". $tranx->data->reference ,$tranx->data->customer->email;
 }

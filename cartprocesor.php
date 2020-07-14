@@ -16,7 +16,7 @@ if(isset($_SESSION['shopping_cart'] )&& !empty($_SESSION['shopping_cart'])) {
             //once last item in cart is remove or $_SESSION["shopping_cart"] is empty redirect to home page
             if (empty($_SESSION["shopping_cart"])) {
                 unset($_SESSION["shopping_cart"]);
-                header("Location:index.html");
+                header("Location:index.php");
             }
         }
     }
@@ -59,7 +59,7 @@ if(isset($_SESSION['shopping_cart'] )&& !empty($_SESSION['shopping_cart'])) {
 //                    and if removing said item emptys the cart uunsett all cart seessions and redirect home
                     if (empty($_SESSION["shopping_cart"])) {
                         unset($_SESSION["shopping_cart"]);
-                        header("Location:index.html");
+                        header("Location:index.php");
                     }
                 } else {
                     $_SESSION['shopping_cart'][$key]["quantity"] = $quantity - 12;
@@ -95,8 +95,8 @@ if(isset($_SESSION['shopping_cart'] )&& !empty($_SESSION['shopping_cart'])) {
                 $subtotal = ($product_price * $product_qty);
                 $total_cart_amount = ($total_cart_amount + $subtotal);
                 //adding total amout to the array
-                $_SESSION['shopping_cart'][$key]['total_cart_amount']=$total_cart_amount;
-                $tots=  $_SESSION['shopping_cart'][$key]['total_cart_amount'];
+                $_SESSION['total_cart_amount']=$total_cart_amount;
+                $tots=  $_SESSION['total_cart_amount'];
             }
             echo(number_format($tots)); //exit and output content
             exit;
@@ -112,7 +112,7 @@ if(isset($_POST["customer_code"])){
    $customer_name= $_SESSION['shopping_cart'][$key]['customer_name'];
    $customer_email= $_SESSION['shopping_cart'][$key]['customer_email'];
 die(json_encode(array('name'=>$customer_name,'email'=>$customer_email)));
-//   header("Location:order_review.php");
+//   header("Location:order_review_&_initialize_payment.php");
 }
 }
 ?>
