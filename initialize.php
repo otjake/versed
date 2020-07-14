@@ -22,7 +22,7 @@ curl_setopt_array($curl, array(
         'callback_url' => $callback_url
     ]),
     CURLOPT_HTTPHEADER => [
-        "authorization: Bearer sk_test_6f9b84948d4c00215106df469b812b55ed80fc5f", //replace this with your own test key
+        "authorization: Bearer secret key", //replace this with your own test key
         "content-type: application/json",
         "cache-control: no-cache"
     ],
