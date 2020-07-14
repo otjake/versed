@@ -175,7 +175,7 @@ if(isset($_SESSION['shopping_cart'])){
         function payWithPaystack() {
 
             var handler = PaystackPop.setup({
-                key: 'pk_test_110212113ff36c5efae0a6a3ac9b6ad06af64b06',
+                key: 'pk_test_key',
                 email: '<?php echo  $customer_email ?>',
                 amount: <?php echo ($final_amount)?>00,
                 metadata: {
