@@ -9,7 +9,7 @@ foreach($_SESSION['shopping_cart'] as &$details){
     $c_email=$details['customer_email'];
 
 }
-$paystack = new Yabacon\Paystack("sk_test_6f9b84948d4c00215106df469b812b55ed80fc5f");
+$paystack = new Yabacon\Paystack("sk_test_key");
 try
 {
     $tranx = $paystack->transaction->initialize([
