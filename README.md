@@ -9,6 +9,7 @@ WE ALSO HAVE A BIT OF JAVASCRIPT(JQUERY) FOR DOM MANIPULATION AND ALSO TO MAKE A
   
   <BR>
   The repo has a master branch and a standard payment branch
+  <BR>
   <strong><i>MASTER BRANCH</i></strong>-:utilizes the inline payystack payyment.
   <br>
   <strong><i>STANDARD PAYMENT BRANCH</i></strong>-:this branch has the standard paystack payment method and utiilizes the yabacon class for verification.
